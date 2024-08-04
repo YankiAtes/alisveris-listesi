@@ -106,7 +106,7 @@ function addItem(e){
 function deleteItem(){
     let elementId = this.id
     async function DeleteDocument() {
-        let ref = doc(db, "items", );
+        let ref = doc(db, "items", elementId );
         const docSnap = await getDoc(ref);
         if (!docSnap.exists()) {
           alert("Error No:1");
