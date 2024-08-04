@@ -1,6 +1,25 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    getDocs,
+    setDoc,
+    collection,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    deleteField,
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject,
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,10 +38,35 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getFirestore();
+
 
 
 let grocery = document.getElementById("grocery");
-grocery.addEventListener("submit", addItem)
+grocery.addEventListener("submit", addItem);
+
+
+    //Import items on start
+    e.preventDefault();
+    let collectionReference = collection(db,"items")
+    let docsSnap = await getDocs(collectionReference)
+    docsSnap.forEach((doc)=>{
+    let data = doc.data.text;
+    let list = document.querySelector("ol");
+    let item = document.createElement("li");
+    let text = document.createElement("p")
+
+    text.textContent = data;
+    this.elements.writeList.value = "";
+    item.append(text);
+    list.append(item);
+    let removeButton = document.createElement("span");
+    removeButton.classList.add("remove");
+    item.append(removeButton);
+    removeButton.addEventListener("click", deleteItem);
+
+    })
+
 
 function addItem(e){
     e.preventDefault();
@@ -35,6 +79,18 @@ function addItem(e){
     this.elements.writeList.value = "";
     item.append(text);
     list.append(item);
+
+    async function AddDocument_CustomID() {
+        let ref = doc(db, "items", data);
+
+        await setDoc(ref, {
+          text:data,
+        })
+          .catch((error) => {
+            alert("Unsuccesful operation, error:", error);
+          });
+      }
+      AddDocument_CustomID();
 
     let removeButton = document.createElement("span");
     removeButton.classList.add("remove");
