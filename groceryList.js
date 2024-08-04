@@ -62,6 +62,7 @@ grocery.addEventListener("submit", addItem);
     
 
     let removeButton = document.createElement("span");
+    removeButton.setAttribute("id", doc.data().text);
     removeButton.classList.add("remove");
     item.append(removeButton);
     removeButton.addEventListener("click", deleteItem);
@@ -95,6 +96,7 @@ function addItem(e){
       AddDocument_CustomID();
 
     let removeButton = document.createElement("span");
+    removeButton.setAttribute("id", data);
     removeButton.classList.add("remove");
     item.append(removeButton);
     removeButton.addEventListener("click", deleteItem);
@@ -102,7 +104,22 @@ function addItem(e){
 
 
 function deleteItem(){
-    this.parentElement.remove();
+    let elementId = this.id
+    async function DeleteDocument() {
+        let ref = doc(db, "items", );
+        const docSnap = await getDoc(ref);
+        if (!docSnap.exists()) {
+          alert("Error No:1");
+          return;
+        }
+
+        await deleteDoc(ref)
+          .catch((error) => {
+            alert("Unsuccesful operation, error:", error);
+          });
+      }
+      DeleteDocument();
+      this.parentElement.remove();
 }
 
 
