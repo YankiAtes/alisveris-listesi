@@ -47,24 +47,26 @@ grocery.addEventListener("submit", addItem);
 
 
     //Import items on start
-    e.preventDefault();
     let collectionReference = collection(db,"items")
     let docsSnap = await getDocs(collectionReference)
     docsSnap.forEach((doc)=>{
-    let data = doc.data.text;
+    console.log(doc.data().text);
+
     let list = document.querySelector("ol");
     let item = document.createElement("li");
     let text = document.createElement("p")
 
-    text.textContent = data;
-    this.elements.writeList.value = "";
+    text.textContent = doc.data().text;
     item.append(text);
     list.append(item);
+    
+
     let removeButton = document.createElement("span");
     removeButton.classList.add("remove");
     item.append(removeButton);
     removeButton.addEventListener("click", deleteItem);
 
+   
     })
 
 
@@ -98,7 +100,8 @@ function addItem(e){
     removeButton.addEventListener("click", deleteItem);
 }
 
-function deleteItem(e){
+
+function deleteItem(){
     this.parentElement.remove();
 }
 
