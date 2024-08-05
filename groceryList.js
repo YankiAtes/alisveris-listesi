@@ -2,24 +2,24 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
 import {
-    getFirestore,
-    doc,
-    getDoc,
-    getDocs,
-    setDoc,
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    deleteField,
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-  import {
-    getStorage,
-    ref,
-    uploadBytes,
-    getDownloadURL,
-    deleteObject,
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  deleteField,
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,7 +32,7 @@ const firebaseConfig = {
   storageBucket: "alisveris-listesi-3b448.appspot.com",
   messagingSenderId: "88875285131",
   appId: "1:88875285131:web:80aef906fad7b63509328e",
-  measurementId: "G-MPHE5C4PT4"
+  measurementId: "G-MPHE5C4PT4",
 };
 
 // Initialize Firebase
@@ -40,86 +40,86 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore();
 
-
-
 let grocery = document.getElementById("grocery");
 grocery.addEventListener("submit", addItem);
 
+//Import items on start
+let collectionReference = collection(db, "items");
+let docsSnap = await getDocs(collectionReference);
+docsSnap.forEach((doc) => {
+  console.log(doc.data().text);
 
-    //Import items on start
-    let collectionReference = collection(db,"items")
-    let docsSnap = await getDocs(collectionReference)
-    docsSnap.forEach((doc)=>{
-    console.log(doc.data().text);
+  let list = document.querySelector("ol");
+  let item = document.createElement("li");
+  let text = document.createElement("p");
 
-    let list = document.querySelector("ol");
-    let item = document.createElement("li");
-    let text = document.createElement("p")
+  text.textContent = doc.data().text;
+  item.append(text);
+  list.append(item);
 
-    text.textContent = doc.data().text;
-    item.append(text);
-    list.append(item);
-    
+  let removeButton = document.createElement("span");
+  removeButton.setAttribute("id", doc.data().text);
+  removeButton.classList.add("remove");
+  item.append(removeButton);
+  removeButton.addEventListener("click", deleteItem);
+});
 
-    let removeButton = document.createElement("span");
-    removeButton.setAttribute("id", doc.data().text);
-    removeButton.classList.add("remove");
-    item.append(removeButton);
-    removeButton.addEventListener("click", deleteItem);
+//Add item with button
+function addItem(e) {
+  e.preventDefault();
+  let data = this.elements.writeList.value;
+  let list = document.querySelector("ol");
+  let item = document.createElement("li");
+  let text = document.createElement("p");
 
-   
-    })
+  text.textContent = data;
+  this.elements.writeList.value = "";
+  item.append(text);
+  list.append(item);
 
+  async function AddDocument_CustomID() {
+    let ref = doc(db, "items", data);
 
-function addItem(e){
-    e.preventDefault();
-    let data = this.elements.writeList.value;
-    let list = document.querySelector("ol");
-    let item = document.createElement("li");
-    let text = document.createElement("p")
+    await setDoc(ref, {
+      text: data,
+    }).catch((error) => {
+      alert("Unsuccesful operation, error:", error);
+    });
+  }
+  AddDocument_CustomID();
 
-    text.textContent = data;
-    this.elements.writeList.value = "";
-    item.append(text);
-    list.append(item);
-
-    async function AddDocument_CustomID() {
-        let ref = doc(db, "items", data);
-
-        await setDoc(ref, {
-          text:data,
-        })
-          .catch((error) => {
-            alert("Unsuccesful operation, error:", error);
-          });
-      }
-      AddDocument_CustomID();
-
-    let removeButton = document.createElement("span");
-    removeButton.setAttribute("id", data);
-    removeButton.classList.add("remove");
-    item.append(removeButton);
-    removeButton.addEventListener("click", deleteItem);
+  let removeButton = document.createElement("span");
+  removeButton.setAttribute("id", data);
+  removeButton.classList.add("remove");
+  item.append(removeButton);
+  removeButton.addEventListener("click", deleteItem);
 }
 
+//Remove item with remove button
+function deleteItem() {
+  let elementId = this.id;
+  async function DeleteDocument() {
+    let ref = doc(db, "items", elementId);
+    const docSnap = await getDoc(ref);
+    if (!docSnap.exists()) {
+      alert("Error No:1");
+      return;
+    }
 
-function deleteItem(){
-    let elementId = this.id
-    async function DeleteDocument() {
-        let ref = doc(db, "items", elementId );
-        const docSnap = await getDoc(ref);
-        if (!docSnap.exists()) {
-          alert("Error No:1");
-          return;
-        }
-
-        await deleteDoc(ref)
-          .catch((error) => {
-            alert("Unsuccesful operation, error:", error);
-          });
-      }
-      DeleteDocument();
-      this.parentElement.remove();
+    await deleteDoc(ref).catch((error) => {
+      alert("Unsuccesful operation, error:", error);
+    });
+  }
+  DeleteDocument();
+  this.parentElement.remove();
 }
 
+//Current date assignation
 
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, "0"); // Ayı iki basamaklı yap
+const day = String(today.getDate()).padStart(2, "0"); // Günü iki basamaklı yap
+const dateStr = `${year}-${month}-${day}`;
+document.getElementById("dateInput").value = dateStr;
+console.log(dateStr);

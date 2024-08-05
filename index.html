@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alışveriş Listesi</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="box">
-            <h2>Alışveriş Listesi</h2>
-            <form id="grocery">
-                <input id="writeList" type="text" placeholder="Eşya Ekleyin..." required>
-                <button>Eşya Ekle</button>
-            </form>
-        </div>
-        <ol></ol>
+      <div class="box">
+        <h2>Alışveriş Listesi</h2>
+        <form id="grocery">
+          <input
+            id="writeList"
+            type="text"
+            placeholder="Eşya Ekleyin..."
+            required
+          />
+          <button>Eşya Ekle</button>
+        </form>
+      </div>
+      <ol></ol>
+
+      <form id="date">
+        <input type="date" id="dateInput" />
+      </form>
     </div>
-    <script type="module" src="groceryList.js" ></script>
-    
-</body>
+    <script type="module" src="groceryList.js"></script>
+  </body>
 </html>

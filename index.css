@@ -87,3 +87,17 @@ body{
     border-radius: 50%;
     cursor: pointer;
 }
+
+.container #date{
+    position: relative;
+    display: flex;   
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#dateInput{
+    position: relative;
+    display: flex;   
+    width: 40%;
+}
