@@ -40,11 +40,36 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore();
 
+//Current date assignation
+let dateInput = document.getElementById("dateInput");
+let today = new Date();
+let year = today.getFullYear();
+let month = String(today.getMonth() + 1).padStart(2, "0"); // Ayı iki basamaklı yap
+let day = String(today.getDate()).padStart(2, "0"); // Günü iki basamaklı yap
+let dateStr = `${year}-${month}-${day}`;
+dateInput.value = localStorage.getItem("selectedDate");
+console.log(localStorage.getItem("selectedDate"), "localStorage");
+if (dateInput.value != localStorage.getItem("selectedDate")) {
+  localStorage.setItem("selectedDate", dateStr);
+  dateInput.value = localStorage.getItem("selectedDate");
+}
+
+//Selected date assignation
+dateInput.addEventListener("change", () => {
+  localStorage.setItem("selectedDate", dateInput.value);
+  console.log(localStorage.getItem("selectedDate"));
+  document.getElementById("grocery").submit();
+});
+//
+//
+//
+//
+//
 let grocery = document.getElementById("grocery");
 grocery.addEventListener("submit", addItem);
 
-//Import items on start
-let collectionReference = collection(db, "items");
+//Import items
+let collectionReference = collection(db, localStorage.getItem("selectedDate"));
 let docsSnap = await getDocs(collectionReference);
 docsSnap.forEach((doc) => {
   console.log(doc.data().text);
@@ -78,7 +103,7 @@ function addItem(e) {
   list.append(item);
 
   async function AddDocument_CustomID() {
-    let ref = doc(db, "items", data);
+    let ref = doc(db, localStorage.getItem("selectedDate"), data);
 
     await setDoc(ref, {
       text: data,
@@ -99,7 +124,7 @@ function addItem(e) {
 function deleteItem() {
   let elementId = this.id;
   async function DeleteDocument() {
-    let ref = doc(db, "items", elementId);
+    let ref = doc(db, localStorage.getItem("selectedDate"), elementId);
     const docSnap = await getDoc(ref);
     if (!docSnap.exists()) {
       alert("Error No:1");
@@ -113,13 +138,3 @@ function deleteItem() {
   DeleteDocument();
   this.parentElement.remove();
 }
-
-//Current date assignation
-
-const today = new Date();
-const year = today.getFullYear();
-const month = String(today.getMonth() + 1).padStart(2, "0"); // Ayı iki basamaklı yap
-const day = String(today.getDate()).padStart(2, "0"); // Günü iki basamaklı yap
-const dateStr = `${year}-${month}-${day}`;
-document.getElementById("dateInput").value = dateStr;
-console.log(dateStr);
