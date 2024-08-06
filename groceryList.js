@@ -105,8 +105,8 @@ function addItem(e) {
   this.elements.writeList.value = "";
   item.append(text);
   list.append(item);
-
-  async function AddDocument_CustomID() {
+  //add document to date specific collection
+  async function AddDocumentDateSpecific() {
     let ref = doc(db, localStorage.getItem("selectedDate"), data);
 
     await setDoc(ref, {
@@ -115,7 +115,18 @@ function addItem(e) {
       alert("Unsuccesful operation, error:", error);
     });
   }
-  AddDocument_CustomID();
+  AddDocumentDateSpecific();
+  //add document to items collection
+  async function AddDocumentToItems() {
+    let ref2 = doc(db, "items", data);
+
+    await setDoc(ref2, {
+      text: data,
+    }).catch((error) => {
+      alert("Unsuccesful operation, error:", error);
+    });
+  }
+  AddDocumentToItems();
 
   let removeButton = document.createElement("span");
   removeButton.setAttribute("id", data);
