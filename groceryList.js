@@ -49,6 +49,10 @@ let day = String(today.getDate()).padStart(2, "0"); // Günü iki basamaklı yap
 let dateStr = `${year}-${month}-${day}`;
 dateInput.value = localStorage.getItem("selectedDate");
 console.log(localStorage.getItem("selectedDate"), "localStorage");
+if (localStorage.getItem("todaysDate") != dateStr) {
+  localStorage.setItem("todaysDate", dateStr);
+  localStorage.setItem("selectedDate", dateStr);
+}
 if (dateInput.value != localStorage.getItem("selectedDate")) {
   localStorage.setItem("selectedDate", dateStr);
   dateInput.value = localStorage.getItem("selectedDate");
