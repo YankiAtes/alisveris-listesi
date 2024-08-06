@@ -116,6 +116,7 @@ function addItem(e) {
     });
   }
   AddDocumentDateSpecific();
+
   //add document to items collection
   async function AddDocumentToItems() {
     let ref2 = doc(db, "items", data);
