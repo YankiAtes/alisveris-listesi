@@ -46,7 +46,7 @@ let options = [];
 let collectionReference = collection(db, "items");
 let docsSnap = await getDocs(collectionReference);
 docsSnap.forEach((doc) => {
-  console.log(doc.data().text);
+  //console.log(doc.data().text);
   options.push(doc.data().text);
 });
 console.log(options);
