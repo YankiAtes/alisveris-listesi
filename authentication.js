@@ -80,7 +80,7 @@ document.getElementById("signOutBtn").addEventListener("click", signOutUser);
 onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
-    log("User is signed in: ", user);
+    console.log("User is signed in: ", user);
   } else {
     //User is signed out
     console.log("User signed out");
