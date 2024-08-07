@@ -10,7 +10,7 @@ body{
     align-items: center;
     min-height: 100vh;
     /*background: linear-gradient(45deg, #9c27b0,#31d5eb);*/
-    background: linear-gradient(45deg,#0080ff, #a0f9ff);    
+    background: linear-gradient(45deg,#0080ff, #a0f9ff); 
 }
 .container{
     position: relative;
@@ -117,4 +117,19 @@ body{
 }
 .dropdown-option:hover{
     background-color: #ddd;
+}
+
+#profile{
+    background-color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color .2s;
+}
+#profile:hover{
+    background-color: #bdbdbd;
+    cursor: pointer;
 }

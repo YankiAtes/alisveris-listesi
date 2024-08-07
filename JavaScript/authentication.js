@@ -70,18 +70,24 @@ const signOutUser = () => {
     });
 };
 
-document
-  .getElementById("signInWithGoogleBtn")
-  .addEventListener("click", signInWithGoogle);
+let signInButton = document.getElementById("g-sign-in-button");
+signInButton.addEventListener("click", signInWithGoogle);
+let signOutButton = document.getElementById("g-sign-out-button"); //.addEventListener("click", signOutUser);
 
-document.getElementById("signOutBtn").addEventListener("click", signOutUser);
+let isUserSignedIn = 0;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
-    console.log("User is signed in: ", user);
+    console.log("User is signed in: ", user, isUserSignedIn);
+    isUserSignedIn = 1;
+    signInButton.style.display = "none";
+    signOut.style.display = "block";
   } else {
     //User is signed out
-    console.log("User signed out");
+    console.log("User is not signed in ", isUserSignedIn);
+    isUserSignedIn = 0;
+    signInButton.style.display = "block";
+    signOutButton.style.display = "none";
   }
 });
