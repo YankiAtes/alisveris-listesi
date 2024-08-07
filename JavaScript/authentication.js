@@ -41,14 +41,13 @@ const db = getFirestore();
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-let user;
 const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       //Signed in user info
-      user = result.user;
+      const user = result.user;
       console.log("User signed in: ", user);
       window.location.href = "index.html";
     })
@@ -90,19 +89,13 @@ onAuthStateChanged(auth, (user) => {
     signInButton.style.display = "none";
     signOut.style.display = "block";
     console.log("User is signed in: ", user, isUserSignedIn);
+    profilePicture.src = user.photoURL;
   } else {
     //User is signed out
     isUserSignedIn = 0;
     signInButton.style.display = "block";
     signOutButton.style.display = "none";
     console.log("User is not signed in", isUserSignedIn);
+    profilePicture.src = "";
   }
 });
-
-//Photo changing
-let profilePicture = document.getElementById("profilePicture");
-if (isUserSignedIn === 1) {
-  profilePicture.src = user.photoURL;
-} else {
-  profilePicture.src = "";
-}
