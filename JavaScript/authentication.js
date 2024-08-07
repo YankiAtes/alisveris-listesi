@@ -73,15 +73,12 @@ const signOutUser = () => {
 };
 
 let signInButton = document.getElementById("g-sign-in-button");
-if (window.location.href === "SignIn.html") {
-  signInButton.addEventListener("click", signInWithGoogle);
-}
+
+signInButton.addEventListener("click", signInWithGoogle);
 
 let signOutButton = document.getElementById("g-sign-out-button");
 
-if (window.location.href === "SignIn.html") {
-  signOutButton.addEventListener("click", signOutUser);
-}
+signOutButton.addEventListener("click", signOutUser);
 
 let isUserSignedIn = 0;
 
