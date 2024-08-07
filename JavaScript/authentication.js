@@ -92,7 +92,7 @@ onAuthStateChanged(auth, (user) => {
     signOut.style.display = "block";
   } else {
     //User is signed out
-    console.log("User is not signed in ", isUserSignedIn);
+    console.log("User is not signed out ", isUserSignedIn);
     isUserSignedIn = 0;
     signInButton.style.display = "block";
     signOutButton.style.display = "none";
