@@ -73,12 +73,15 @@ const signOutUser = () => {
 };
 
 let signInButton = document.getElementById("g-sign-in-button");
-
-signInButton.addEventListener("click", signInWithGoogle);
+if (window.location.href === "SignIn.html") {
+  signInButton.addEventListener("click", signInWithGoogle);
+}
 
 let signOutButton = document.getElementById("g-sign-out-button");
 
-signOutButton.addEventListener("click", signOutUser);
+if (window.location.href === "SignIn.html") {
+  signOutButton.addEventListener("click", signOutUser);
+}
 
 let isUserSignedIn = 0;
 
@@ -86,16 +89,20 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
     isUserSignedIn = 1;
+
     signInButton.style.display = "none";
-    signOut.style.display = "block";
+    signOutButton.style.display = "block";
+
     console.log("User is signed in: ", user, isUserSignedIn);
     profilePicture.src = user.photoURL;
   } else {
     //User is signed out
     isUserSignedIn = 0;
-    signInButton.style.display = "block";
+
     signOutButton.style.display = "none";
+    signInButton.style.display = "block";
+
     console.log("User is not signed in", isUserSignedIn);
-    profilePicture.src = "";
+    profilePicture.src = " ";
   }
 });
