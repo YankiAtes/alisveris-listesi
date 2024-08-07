@@ -49,6 +49,7 @@ const signInWithGoogle = () => {
       //Signed in user info
       const user = result.user;
       console.log("User signed in: ", user);
+      window.location.href = "index.html";
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -68,6 +69,7 @@ const signOutUser = () => {
     .catch((error) => {
       console.log("Error signing out: ", error);
     });
+  window.location.href = "index.html";
 };
 
 let signInButton = document.getElementById("g-sign-in-button");
