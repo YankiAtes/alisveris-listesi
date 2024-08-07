@@ -41,13 +41,14 @@ const db = getFirestore();
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+let user;
 const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       //Signed in user info
-      const user = result.user;
+      user = result.user;
       console.log("User signed in: ", user);
       window.location.href = "index.html";
     })
@@ -81,20 +82,28 @@ if (signOutButton) {
   signOutButton.addEventListener("click", signOutUser);
 }
 
-let isUserSignedIn;
+let isUserSignedIn = 0;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
-    console.log("User is signed in: ", user, isUserSignedIn);
     isUserSignedIn = 1;
     signInButton.style.display = "none";
     signOut.style.display = "block";
+    console.log("User is signed in: ", user, isUserSignedIn);
   } else {
     //User is signed out
-    console.log("User is not signed out ", isUserSignedIn);
     isUserSignedIn = 0;
     signInButton.style.display = "block";
     signOutButton.style.display = "none";
+    console.log("User is not signed in", isUserSignedIn);
   }
 });
+
+//Photo changing
+let profilePicture = document.getElementById("profilePicture");
+if (isUserSignedIn === 1) {
+  profilePicture.src = user.photoURL;
+} else {
+  profilePicture.src = "";
+}
