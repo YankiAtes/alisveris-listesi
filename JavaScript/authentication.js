@@ -83,7 +83,7 @@ signOutButton.addEventListener("click", signOutUser);
 let isUserSignedIn = 0;
 
 let profilePicture = document.getElementById("profilePicture");
-
+//
 onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
