@@ -145,15 +145,13 @@ function addItem(e) {
   item.append(removeButton);
   removeButton.addEventListener("click", deleteItem);
 
-  if (localStorage.getItem("userProfilePicture")) {
-    let adderProfilePhoto = document.createElement("img");
-    adderProfilePhoto.setAttribute(
-      "src",
-      localStorage.getItem("userProfilePicture")
-    );
-    adderProfilePhoto.classList.add("adderProfilePhoto");
-    item.append(adderProfilePhoto);
-  }
+  let adderProfilePhoto = document.createElement("img");
+  adderProfilePhoto.setAttribute(
+    "src",
+    localStorage.getItem("userProfilePicture")
+  );
+  adderProfilePhoto.classList.add("adderProfilePhoto");
+  item.append(adderProfilePhoto);
 }
 
 //Remove item with remove button
