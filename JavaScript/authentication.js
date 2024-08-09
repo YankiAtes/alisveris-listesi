@@ -87,6 +87,8 @@ localStorage.setItem("isUserSignedIn", isUserSignedIn);
 
 let profilePicture = document.getElementById("profilePicture");
 //
+let reference = doc(db, "data", "onConstruction");
+let docSnap = await getDoc(reference);
 onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
@@ -101,6 +103,8 @@ onAuthStateChanged(auth, (user) => {
     console.log("User is signed in: ", user, isUserSignedIn);
     if (profilePicture) {
       profilePicture.src = user.photoURL;
+      profilePicture.style.display = "block";
+      document.getElementById("profile").style.display = "block";
     }
     localStorage.setItem("userProfilePicture", user.photoURL);
   } else {
@@ -116,6 +120,13 @@ onAuthStateChanged(auth, (user) => {
     console.log("User is not signed in", isUserSignedIn);
     if (profilePicture) {
       profilePicture.src = "";
+      if (docSnap.data().value == "0") {
+        profilePicture.style.display = "none";
+        document.getElementById("profile").style.display = "none";
+      } else {
+        profilePicture.style.display = "block";
+        document.getElementById("profile").style.display = "block";
+      }
     }
   }
 });
