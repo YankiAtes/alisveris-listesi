@@ -91,6 +91,16 @@ docsSnap.forEach((doc) => {
   removeButton.classList.add("remove");
   item.append(removeButton);
   removeButton.addEventListener("click", deleteItem);
+
+  if (localStorage.getItem("userProfilePicture")) {
+    let adderProfilePhoto = document.createElement("img");
+    adderProfilePhoto.setAttribute(
+      "src",
+      localStorage.getItem("userProfilePicture")
+    );
+    adderProfilePhoto.classList.add("adderProfilePhoto");
+    item.append(adderProfilePhoto);
+  }
 });
 
 //Add item with button
@@ -134,6 +144,16 @@ function addItem(e) {
   removeButton.classList.add("remove");
   item.append(removeButton);
   removeButton.addEventListener("click", deleteItem);
+
+  if (localStorage.getItem("userProfilePicture")) {
+    let adderProfilePhoto = document.createElement("img");
+    adderProfilePhoto.setAttribute(
+      "src",
+      localStorage.getItem("userProfilePicture")
+    );
+    adderProfilePhoto.classList.add("adderProfilePhoto");
+    item.append(adderProfilePhoto);
+  }
 }
 
 //Remove item with remove button

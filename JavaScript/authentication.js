@@ -100,6 +100,7 @@ onAuthStateChanged(auth, (user) => {
     if (profilePicture) {
       profilePicture.src = user.photoURL;
     }
+    localStorage.setItem("userProfilePicture", user.photoURL);
   } else {
     //User is signed out
     isUserSignedIn = 0;

@@ -114,6 +114,8 @@ function handleOptionSelect(selectedItem) {
     removeButton.classList.add("remove");
     item.append(removeButton);
     removeButton.addEventListener("click", deleteItem);
+
+    inputField.textContent = null;
   }
 
   addItem();
