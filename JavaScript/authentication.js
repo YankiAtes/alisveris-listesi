@@ -114,5 +114,10 @@ onAuthStateChanged(auth, (user) => {
     if (profilePicture) {
       profilePicture.src = " ";
     }
+
+    //Redirect to login page on page load
+    const meta = document.createElement("meta");
+    meta.setAttribute("content", '0; URL="SignIn.html"');
+    document.head.appendChild(meta);
   }
 });
