@@ -125,7 +125,7 @@ function handleOptionSelect(selectedItem) {
       item.append(adderProfilePhoto);
     }
 
-    inputField.value = "";
+    document.getElementById("grocery").submit(preventDefault());
   }
 
   addItem();

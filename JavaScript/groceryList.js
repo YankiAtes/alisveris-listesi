@@ -106,6 +106,8 @@ docsSnap.forEach((doc) => {
 //Add item with button
 function addItem(e) {
   e.preventDefault();
+  console.log("adding item");
+
   let data = this.elements.writeList.value;
   let list = document.querySelector("ol");
   let item = document.createElement("li");
