@@ -83,6 +83,7 @@ if (signOutButton) {
 }
 
 let isUserSignedIn = 0;
+localStorage.setItem("isUserSignedIn", isUserSignedIn);
 
 let profilePicture = document.getElementById("profilePicture");
 //
@@ -90,6 +91,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     //User is signed in
     isUserSignedIn = 1;
+    localStorage.setItem("isUserSignedIn", isUserSignedIn);
 
     if (signInButton && signOutButton) {
       signInButton.style.display = "none";
@@ -104,6 +106,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     //User is signed out
     isUserSignedIn = 0;
+    localStorage.setItem("isUserSignedIn", isUserSignedIn);
 
     if (signInButton && signOutButton) {
       signOutButton.style.display = "none";
@@ -112,13 +115,7 @@ onAuthStateChanged(auth, (user) => {
 
     console.log("User is not signed in", isUserSignedIn);
     if (profilePicture) {
-      profilePicture.src = " ";
+      profilePicture.src = "";
     }
-
-    //Redirect to login page on page load
-    const meta = document.createElement("meta");
-    meta.setAttribute("http-equiv", "refresh");
-    meta.setAttribute("content", '0; URL="SignIn.html"');
-    document.head.appendChild(meta);
   }
 });
