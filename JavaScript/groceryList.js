@@ -72,11 +72,14 @@ dateInput.addEventListener("change", () => {
 let grocery = document.getElementById("grocery");
 grocery.addEventListener("submit", addItem);
 
+let importedUploaderImage;
 //Import items
 let collectionReference = collection(db, localStorage.getItem("selectedDate"));
 let docsSnap = await getDocs(collectionReference);
 docsSnap.forEach((doc) => {
   console.log(doc.data().text);
+  console.log("Uploader Image", doc.data().uploaderIMG);
+  importedUploaderImage = doc.data().uploaderIMG;
 
   let list = document.querySelector("ol");
   let item = document.createElement("li");
@@ -92,16 +95,15 @@ docsSnap.forEach((doc) => {
   item.append(removeButton);
   removeButton.addEventListener("click", deleteItem);
 
-  if (localStorage.getItem("userProfilePicture")) {
+  //----------
+  if (importedUploaderImage) {
     let adderProfilePhoto = document.createElement("img");
-    adderProfilePhoto.setAttribute(
-      "src",
-      localStorage.getItem("userProfilePicture")
-    );
+    adderProfilePhoto.setAttribute("src", importedUploaderImage);
     adderProfilePhoto.classList.add("adderProfilePhoto");
     item.append(adderProfilePhoto);
   }
 });
+//-------
 
 //Add item with button
 function addItem(e) {
@@ -123,6 +125,7 @@ function addItem(e) {
 
     await setDoc(ref, {
       text: data,
+      uplaoderIMG: localStorage.getItem("userProfilePicture"),
     }).catch((error) => {
       alert("Unsuccesful operation, error:", error);
     });
@@ -147,12 +150,9 @@ function addItem(e) {
   item.append(removeButton);
   removeButton.addEventListener("click", deleteItem);
 
-  if (localStorage.getItem("userProfilePicture")) {
+  if (importedUploaderImage) {
     let adderProfilePhoto = document.createElement("img");
-    adderProfilePhoto.setAttribute(
-      "src",
-      localStorage.getItem("userProfilePicture")
-    );
+    adderProfilePhoto.setAttribute("src", importedUploaderImage);
     adderProfilePhoto.classList.add("adderProfilePhoto");
     item.append(adderProfilePhoto);
   }
