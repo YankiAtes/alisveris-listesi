@@ -107,6 +107,7 @@ onAuthStateChanged(auth, (user) => {
       document.getElementById("profile").style.display = "block";
     }
     localStorage.setItem("userProfilePicture", user.photoURL);
+    console.log(localStorage.getItem("userProfilePicture"));
   } else {
     //User is signed out
     isUserSignedIn = 0;

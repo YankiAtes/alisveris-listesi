@@ -104,6 +104,7 @@ function handleOptionSelect(selectedItem) {
 
       await setDoc(ref, {
         text: data,
+        uplaoderIMG: localStorage.getItem("userProfilePicture"),
       }).catch((error) => {
         alert("Unsuccesful operation, error:", error);
       });

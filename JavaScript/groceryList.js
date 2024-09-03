@@ -125,7 +125,7 @@ function addItem(e) {
 
     await setDoc(ref, {
       text: data,
-      uplaoderIMG: localStorage.getItem("userProfilePicture"),
+      uploaderIMG: localStorage.getItem("userProfilePicture"),
     }).catch((error) => {
       alert("Unsuccesful operation, error:", error);
     });
